@@ -1,43 +1,47 @@
 import sys
 import pygame
 import numpy as np
-from functions import f, g
-
-window_width, window_height = 800, 600
+import src.uppgift2 as u2
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-def game_loop(initial_positions):
-    pygame.init()
+def run(initial_distance, lead_car_velocity):
+    (time_axis, graphs) = u2.calculate_positions(initial_distance, lead_car_velocity)
 
+    window_width, window_height = 800, 600
+    pygame.init()
     clock = pygame.time.Clock()
     window = pygame.display.set_mode((window_width, window_height))
-    positions = initial_positions
 
-    ticks = 0
+    current_index = 1
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
 
-        t = pygame.time.get_ticks()
-        dt = (t-ticks) / 1000.0
-        ticks = t
+        time = pygame.time.get_ticks() / 1000
 
-        distances = np.diff(positions)
-        last = positions[distances.size:]
-        velocities = np.concatenate((np.vectorize(f)(distances), np.vectorize(g)(last)))
+        for i in range(current_index, len(time_axis)):
+            if time_axis[i] > time: break
+            current_index = i
+
         
-        positions = positions + velocities * dt
-
         window.fill(BLACK)
 
         pygame.draw.rect(window, WHITE, (0, 400, 800, 200))
 
-        for x in positions:
+        for points in graphs:
+            x = points[current_index]
             pygame.draw.circle(window, WHITE, (x, 400), 10)
 
         clock.tick(60)
         pygame.display.update()
+
+
+
+
+
+
+

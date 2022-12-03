@@ -1,16 +1,9 @@
-import numpy as np
-from game import game_loop
+import src.uppgift1 as u1
+import src.uppgift2 as u2
+import src.uppgift3 as u3
 
 def start():
-    d = 75
-    v = 25
-    n = 10
-
-    distance = np.random.random(n) * d
-    position = np.cumsum(distance)
-
-    game_loop(position)
-
+    u3.run(75, 5)
 
 if(__name__ == "__main__"):
     start()
