@@ -17,16 +17,16 @@ def f(x):
     return min(max(x / d, 0), 1) * 25
 
 
-def fixed_backward_euler(current_pos, front_new_pos, max_iter): 
+def fixed_backward_euler(current_pos, front_new_pos, max_iter, want_tolerans = True): 
     iter = 0
 
     # need to do something about tol when searching for the iteration plot
-    tol = 10^-1
+    tolerans  = 10^-10
 
     diff = abs(current_pos - (current_pos + time_step * f(front_new_pos - current_pos)))
     x = current_pos
 
-    while diff > tol and iter < max_iter: 
+    while (diff > tolerans and iter < max_iter and want_tolerans) or (iter < max_iter): 
         # funktionen på höger sida kanske ska skrivas som en enskild funktion
         x = current_pos + time_step * f(front_new_pos - x)
         iter += 1
@@ -40,7 +40,7 @@ def explicit_backward_euler(current_pos, front_new_pos):
     return  current_pos + k * min((front_new_pos - current_pos)/(1+k), d)
 
 
-def calculate_positions(initial_distance, lead_car_velocity, is_explicit = True, max_iter = 100):
+def calculate_positions(initial_distance, lead_car_velocity, is_explicit = True, max_iter = 100, want_tolerans = True):
     positions = np.arange(num_cars) * float(initial_distance)
 
     time_axis = []
@@ -57,7 +57,7 @@ def calculate_positions(initial_distance, lead_car_velocity, is_explicit = True,
             if is_explicit: 
                 graphs[-i].append(explicit_backward_euler(positions[-i], positions[-i + 1]))
             else: 
-                graphs[-i].append(fixed_backward_euler(positions[-i], positions[-i + 1], max_iter))
+                graphs[-i].append(fixed_backward_euler(positions[-i], positions[-i + 1], max_iter, want_tolerans))
             positions[-i] = graphs[-i][-1]   # car i (counted backwards) latest updated pos
     
     return (time_axis, graphs)
