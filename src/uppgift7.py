@@ -7,27 +7,26 @@ d = 75
 k = time_step * v_max / d
 
 def f(x):
-    return min(max(x / d, 0), 1) * 25
+    return min(max(x / d, 0), 1) * v_max
 
-def fixed_backward_euler(current_pos, front_pos, front_new_pos, iterations=1000, tolerans=10^-10):
-    diff = abs(current_pos - (current_pos + time_step * f(front_new_pos - current_pos)))
+def fixed_backward_euler(current_pos, front_pos, front_new_pos, iterations=100, tolerans=10^-10):
+    calculate_difference = lambda x: abs(x - (current_pos + time_step * f(front_new_pos - x)))
+
     x = current_pos
 
-    i = 0
-    while (diff > tolerans and i < iterations):
-        x = current_pos + time_step * f(front_new_pos - x)
-        i += 1
+    for _ in range(iterations):
+        if calculate_difference(x) < tolerans: break
 
-        diff = abs(x - (current_pos + time_step * f(front_new_pos - x)))
+        x = current_pos + time_step * f(front_new_pos - x)
 
     return x
 
 
 def explicit_backward_euler(current_pos, front_pos, front_new_pos):
-    return current_pos + k * min((front_new_pos - current_pos)/(1+k), d)
+    return current_pos + k * min((front_new_pos - current_pos) / (1 + k), d)
 
 
 def run():
-    (time_axis, graphs) = euler_iterations(explicit_backward_euler)
+    (time_axis, graphs) = euler_iterations(fixed_backward_euler)
 
     plot(time_axis, graphs)

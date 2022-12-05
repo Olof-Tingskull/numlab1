@@ -33,14 +33,13 @@ def run():
             if time_axis[i] > time: break
             current_index = i
 
-        
         window.fill(BLACK)
 
-        pygame.draw.rect(window, WHITE, (0, 400, 800, 200))
+        pygame.draw.rect(window, WHITE, (0, window_height - 200, window_width, 200))
 
         for points in graphs:
             x = points[current_index]
-            pygame.draw.circle(window, WHITE, (x, 400), 10)
+            pygame.draw.circle(window, WHITE, (x, window_height - 200), 10)
 
         pygame.display.update()
 

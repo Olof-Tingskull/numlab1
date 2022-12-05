@@ -7,6 +7,6 @@ def plot(horizontal, graphs):
     for graph in graphs:
         ax.plot(horizontal, graph, linewidth=2.0)
 
-    ax.set(xlim=(0, np.max(horizontal)),  ylim=(0, np.max(graphs)))
+    ax.set(xlim=(np.min(horizontal), np.max(horizontal)),  ylim=(np.min(graphs), np.max(graphs)))
 
     plt.show()

@@ -1,8 +1,8 @@
-time_step=0.0001
+time_step=0.01
 num_cars = 10
-total_time = 10
+total_time = 25
 distance = 10
-lead_velocity = 10
+lead_velocity = 25
 
 def euler_iterations(iteration_function):
     total_steps = int(total_time / time_step)
