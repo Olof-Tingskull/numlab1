@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 v_max = 25
 num_cars = 10
 d = 75
-total_time = 100
+total_time = 1000
 time_step = 0.1
 k = time_step * v_max / d
 
