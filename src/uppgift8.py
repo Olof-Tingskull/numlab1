@@ -1,32 +1,28 @@
 import matplotlib.pyplot as plt 
 import numpy as np 
-import src.uppgift7 as u7 
+from src.uppgift7 import explicit_backward_euler, fixed_backward_euler
+from src.euler_iterations import euler_iterations
+from src.plot import plot
 
+min_iter = 1
+max_iter = 30
 
+def run(): 
+    (_, explicit_cars) = euler_iterations(explicit_backward_euler)
 
+    explicit_last_pos = explicit_cars[0][-1] * np.ones(max_iter - min_iter + 1)
+    iterations = np.arange(min_iter, max_iter + 1)
+    fixed_last_post = iterations * 0
 
-def run(initial_distance, lead_car_velocity, min_iter, max_iter): 
-    (t, explicit_graph) = u7.calculate_positions(initial_distance, lead_car_velocity)
+    for i in iterations: 
+        (_, fixed_cars) = euler_iterations(lambda car, front, front_new: fixed_backward_euler(car, front, front_new, i, 0))
+        fixed_last_post[i - min_iter] = fixed_cars[0][-1] 
+        print("Done with iterations " + str(i))
 
-    last_car_last_pos = np.empty(max_iter - min_iter)
-
-    for i in range(min_iter, max_iter): 
-        (t, graph) = u7.calculate_positions(initial_distance, lead_car_velocity, is_explicit = False, max_iter = i, want_tolerans = False)
-
-        # dubbelchecka så att indexeringen är korrekt
-        last_car_last_pos[i - min_iter] = graph[0][-1]
-
+    log_errors = np.log(np.absolute(fixed_last_post - explicit_last_pos))
     
-    fig, ax = plt.subplots()
+    plot(iterations, [log_errors])
 
-    # tror man måste ha asarray här då grpahs i u7 filen verkar vara en vanlig array 
-    log_errors = np.log(np.absolute(last_car_last_pos - np.asarray(explicit_graph[0][-1])))
-
-    ax.plot(np.arange(min_iter, max_iter), log_errors, linewidth=2.0)
-
-   # ax.set(xlim=(0, max_iter),  ylim=(0, np.max(log_errors) + 1))
-
-    plt.show()
 
 
 

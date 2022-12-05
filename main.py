@@ -5,7 +5,7 @@ import src.uppgift7 as u7
 import src.uppgift8 as u8
 
 def start():
-    u8.run(75,5, 1, 30)
+    u8.run()
 
 if(__name__ == "__main__"):
     start()

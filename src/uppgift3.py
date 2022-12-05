@@ -1,13 +1,20 @@
 import sys
 import pygame
 import numpy as np
-import src.uppgift2 as u2
+from src.euler_iterations import euler_iterations, time_step
+from src.plot import plot
+
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-def run(initial_distance, lead_car_velocity, time_multiplier = 1):
-    (time_axis, graphs) = u2.calculate_positions(initial_distance, lead_car_velocity)
+def f(x):    
+    return min(max(x / 75, 0), 1) * 25
+
+time_multiplier = 5
+
+def run():
+    (time_axis, graphs) = euler_iterations(lambda cur, front: cur + time_step * f(front - cur))
 
     window_width, window_height = 800, 600
     pygame.init()
