@@ -3,7 +3,6 @@ import numpy as np
 from src.uppgift7 import explicit_backward_euler, fixed_backward_euler
 from src.euler_iterations import euler_iterations
 from src.plot import plot
-import math
 
 min_iter = 1
 max_iter = 20

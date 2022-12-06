@@ -1,20 +1,17 @@
 import sys
 import pygame
 import numpy as np
-from src.euler_iterations import euler_iterations, time_step
-from src.plot import plot
-
+from src.euler_iterations import euler_iterations
+from src.uppgift2 import iteration_function
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-def f(x):    
-    return min(max(x / 75, 0), 1) * 25
 
 time_multiplier = 5
 
 def run():
-    (time_axis, graphs) = euler_iterations(lambda cur, front: cur + time_step * f(front - cur))
+    (time_axis, graphs) = euler_iterations(iteration_function)
 
     window_width, window_height = 800, 600
     pygame.init()
