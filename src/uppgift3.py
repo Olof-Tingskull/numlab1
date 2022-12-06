@@ -7,7 +7,6 @@ from src.uppgift2 import iteration_function
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-
 time_multiplier = 5
 
 def run():

@@ -10,9 +10,9 @@ max_iter = 20
 def run(): 
     (_, explicit_cars) = euler_iterations(explicit_backward_euler)
 
-    explicit_last_pos = np.ones(max_iter - min_iter + 1, dtype=np.float128) * explicit_cars[0][-1]
+    explicit_last_pos = np.ones(max_iter - min_iter + 1) * explicit_cars[0][-1]
     iterations = np.arange(min_iter, max_iter + 1)
-    fixed_last_post = np.zeros(max_iter - min_iter + 1, dtype=np.float128)
+    fixed_last_post = np.zeros(max_iter - min_iter + 1)
 
     for i in iterations: 
         (_, fixed_cars) = euler_iterations(lambda car, front, front_new: fixed_backward_euler(car, front, front_new, i, 0))
