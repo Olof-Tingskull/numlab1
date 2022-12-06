@@ -2,8 +2,8 @@ import numpy as np
 from src.euler_iterations import euler_iterations, time_step
 from src.plot import plot
 
-v_max = 25
-d = 75
+v_max = 25.
+d = 75.
 k = time_step * v_max / d
 
 def f(x):
@@ -15,7 +15,7 @@ def fixed_backward_euler(current_pos, front_pos, front_new_pos, iterations=100, 
     x = current_pos
 
     for _ in range(iterations):
-        if calculate_error(x) < tolerans: break
+        if tolerans > 0 and calculate_error(x) < tolerans: break
 
         x = current_pos + time_step * f(front_new_pos - x)
 
